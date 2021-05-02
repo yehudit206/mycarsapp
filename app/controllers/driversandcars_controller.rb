@@ -27,6 +27,7 @@ class DriversandcarsController < ApplicationController
 
   end 
   def submit
+
     @carSelectedID = params[:car]
     @carSelected=Car.find(@carSelectedID)
     @driverSelectedID = params[:driver]
@@ -35,7 +36,6 @@ class DriversandcarsController < ApplicationController
     if @links ==nil
       @newLink=Link.new(car:@carSelected,driver:@driverSelected)
       @newLink.save
-
       if @newLink.save
         render json: {text:"Connect car to driver - sucsses"}
       else

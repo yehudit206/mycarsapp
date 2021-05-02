@@ -1,17 +1,22 @@
  <div class="row" style=    "padding-bottom: 20px;">
   <div class="col">
+ <h3> choose car</h3>
  <select class="form-select cmbx_cars" aria-label="Default select example">
-<option selected>choose car</option>
+<option selected></option>
 
     <% @cars.each do |car| %>
   <option value="<%= car.id %>"><%= car.title %></option>
 <% end %>
 </select>
 </div>
+<div class="col text-center">
+<button id="submitBtn" type="submit" class="btn btn-primary text-center" style="width:50%; margin-inline: auto;height:80px;">Connect</button>
+</div>
   <div class="col">
 
+<h3>choose driver</h3>
 <select class="cmbx_drivers form-select" id="cmbx_drivers">
-<option selected>choose driver</option>
+<option selected></option>
 <% @drivers.each do |driver| %>
   <option value="<%= driver.id %>"><%= driver.name %></option>
 <% end %>
@@ -19,17 +24,33 @@
 </div>
 </div>
 <div class="row">
-<table class="ResulsTable table table-striped" style="padding-top:20px;    min-height: 100px;">
+  <div class="col">
+
+<table class="ResulsTableCar table table-striped" style="padding-top:20px;    min-height: 100px;">
 
 </table>
 </div>
-<button id="submitBtn" type="submit" class="btn btn-primary" style="width:50%; margin-inline: auto;">Submit</button>
+  <div class="col">
+
+<table class="ResulsTableDriver table table-striped" style="padding-top:20px;    min-height: 100px;">
+
+</table>
+</div>
+</div>
 <div class="submitResult">
 
 
 
 </div>
+<style>
+.cover-container {
+    max-width: 60em;
+}
+.inner{
+  padding-left: 184px;
 
+}
+</style>
 <script>
 // $("#container").on('click-row.bs.table', function (e, row, $element) {
 //     window.location = $element.data('href');
@@ -38,7 +59,15 @@
 jQuery(document).ready(function($) {
     $(".cmbx_cars").change(function() {
       $(".submitResult").html("")
-        var optionValue =$(".cmbx_cars").val();
+  printTbleDriver();
+    });
+
+    $(".cmbx_drivers").change(function() {
+      $(".submitResult").html("")
+printTableCar();
+    });
+function printTbleDriver(){
+      var optionValue =$(".cmbx_cars").val();
          if (optionValue) {
       $.ajax({
           type:    "POST",
@@ -48,24 +77,23 @@ jQuery(document).ready(function($) {
             var links=data.links 
             if(links.length!=0)
             {
-                $(".ResulsTable").html("<tr><th>id</th><th>name</th><th>created_at</th></tr>")
+                $(".ResulsTableCar").html("<tr><th>id</th><th>name</th><th>created_at</th></tr>")
                 for (index = 0; index < links.length; index++) {
-                    $(".ResulsTable tr:last").after("<tr><tr><td>" + links[index].driver_id + "</td> <td>" + data.drivers[index] +  "</td> <td>" +  links[index].created_at + "</td> </tr>");
+                    $(".ResulsTableCar tr:last").after("<tr><tr><td>" + links[index].driver_id + "</td> <td>" + data.drivers[index] +  "</td> <td>" +  links[index].created_at + "</td> </tr>");
                 }
             }
             else 
             {
-              $(".ResulsTable").html("No drivers connected to this car")
+              $(".ResulsTableCar").html("No drivers connected to this car")
             }
 
           },
           error:   function(post){ console.log(this) }
         });
     }
-    });
-
-    $(".cmbx_drivers").change(function() {
-      $(".submitResult").html("")
+}
+function printTableCar()
+{
         var optionValue =$(".cmbx_drivers").val();
          if (optionValue) {
       $.ajax({
@@ -76,13 +104,13 @@ jQuery(document).ready(function($) {
             var links=data.links 
             if(links.length!=0)
             {
-                        $(".ResulsTable").html("<tr><th>id</th><th>title</th><th>created_at</th></tr>")
+                        $(".ResulsTableDriver").html("<tr><th>id</th><th>title</th><th>created_at</th></tr>")
                             for (index = 0; index < links.length; index++) {
-        $(".ResulsTable tr:last").after("<tr><td>" + links[index].car_id + "</td> <td>" + data.cars[index] +  "</td> <td>" +  links[index].created_at + "</td> </tr>");
+        $(".ResulsTableDriver tr:last").after("<tr><td>" + links[index].car_id + "</td> <td>" + data.cars[index] +  "</td> <td>" +  links[index].created_at + "</td> </tr>");
     }
             }
             else{
-              $(".ResulsTable").html("No cars connected to this driver")
+              $(".ResulsTableDriver").html("No cars connected to this driver")
 
             }
 
@@ -90,27 +118,28 @@ jQuery(document).ready(function($) {
           error:   function(post){ console.log(this) }
         });
     }
-    });
-
-
+}
     $("#submitBtn").click(function() {
  var car =$(".cmbx_cars").val();
   var driver =$(".cmbx_drivers").val();
 
-         if (car&driver) {
+         if (car&&driver) {
             $.ajax({
                 type:    "POST",
                 url:     "/driversandcars/submit",
                    data:    {car: car,driver:driver },
                 success: function(data){ 
 
-                   alert(data.text);
-  //location.reload();
-                  
-                  console.log(data.text);
+                   alert(data.text);   
+                   printTableCar();  
+                   printTbleDriver();             
                    },
                 error:   function(post){ console.log(this) }
                 });
+         }
+         else
+         {
+           alert("faild")
          }
     });
 });
