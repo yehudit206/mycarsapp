@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  type: 
-  color: 
+  title: MyText
+  type_car: MyText
+  color: MyText
 
 two:
-  title: MyString
-  type: 
-  color: 
+  title: MyText
+  type_car: MyText
+  color: MyText

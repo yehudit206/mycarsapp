@@ -13,3 +13,6 @@
  *= require_tree .
  *= require_self
  */
+ .masthead {
+     margin:80px;
+ }

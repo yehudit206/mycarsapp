@@ -1,7 +1,9 @@
 <h1>Cars</h1>
+
 <div id=container>
 <table class="table table-striped table-hover">
-  <% @cars.each do |car| %>
+
+
 <thead>
     <tr>
       <th scope="col">#</th>
@@ -11,14 +13,14 @@
     </tr>
   </thead>
   <tbody>
-
+<% @cars.each do |car| %>
     <tr class='clickable-row' data-href="<%= car_path(car) %>">
       <th scope="row"><%= car.id %></th>
       <td><%= car.title %></td>
       <td>
-      <%# <%= car.type %> %>
+       <%= car.type_car %> 
       </td>
-      <td><%= car.colorID %></td>
+      <td><%= car.color %></td>
     </tr>
   
 
@@ -29,12 +31,13 @@
        New Car
       </a>
 <script>
-$("#container").on('click-row.bs.table', function (e, row, $element) {
-    window.location = $element.data('href');
-});
-// jQuery(document).ready(function($) {
-//     $(".clickable-row").click(function() {
-//         window.location = $(this).data("href");
-//     });
+// $("#container").on('click-row.bs.table', function (e, row, $element) {
+//     window.location = $element.data('href');
 // });
+
+jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+});
 </script>

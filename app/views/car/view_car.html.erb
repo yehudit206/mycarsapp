@@ -1,7 +1,21 @@
-<h2>view car<h2>
-<h1><%= @car.title %></h1>
 
-<p><%= @car.type %></p>
+<div class="card" style="width: 18rem;">
 
-<p><%= @car.colorID %></p>
+<% if @car.color == 'red' %>
+  <%=image_tag ("red.jpg")%> 
+<% elsif @car.color == 'blue'%>
+   <%=image_tag ("blue.jpg")%> 
+<% else %>
+   <%=image_tag ("yellow.jpg")%> 
+
+<% end %>
+
+
+  <div class="card-body">
+    <h3 class="card-title"><%= @car.title %></h3>
+    <p class="card-text">Type:<%= @car.type_car %> </p>
+        <p class="card-text">Color:<%= @car.color %> </p>
+
+  </div>
+</div>
 <%= link_to "Return", cars_path %>

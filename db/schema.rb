@@ -10,22 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_28_073259) do
+ActiveRecord::Schema.define(version: 2021_05_02_162945) do
 
   create_table "cars", force: :cascade do |t|
-    t.string "title"
-    t.integer "typeID"
-    t.integer "colorID"
+    t.text "title"
+    t.text "type_car"
+    t.text "color"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "drivers", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.date "BirthDate"
+    t.text "name"
+    t.text "email"
+    t.date "birth"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "links", force: :cascade do |t|
+    t.integer "driver_id", null: false
+    t.integer "car_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["car_id"], name: "index_links_on_car_id"
+    t.index ["driver_id"], name: "index_links_on_driver_id"
+  end
+
+  add_foreign_key "links", "cars"
+  add_foreign_key "links", "drivers"
 end

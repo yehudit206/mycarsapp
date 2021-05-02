@@ -1,25 +1,32 @@
 <h1>New Car</h1>
-
+<div style="width: 70%;
+    margin: auto;
+    margin-top: inherit;
+    padding-top: 30px;">
 <%= form_with model: @car do |form| %>
-  <div>
+  <div class="form-group">
+
     <%= form.label :title %><br>
-    <%= form.text_field :title %>
+    <%= form.text_field :title,class: 'form-control' %>
     <% @car.errors.full_messages_for(:title).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
 
-  <div>
-    <%= form.label :type %><br>
-    <%= form.text_area :type %>
+  <div class="form-group">
+    <%= form.label :type%><br>
+    <%= form.text_area :type_car,class: 'form-control' %>
   </div>
 
-  <div>
-    <%= form.label :colorID %><br>
-<%= form.select :colorID, [["blue",1], ["yellow",2], ["red",3]] %>
+  <div class="form-group" style='padding-bottom:20px'>
+    <%= form.label :color %><br>
+<%= form.select(:color, ["choose color",  "blue","yellow","red"], { :class => 'form-control' }) %>
+
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit 'Submit' , :class=>'btn btn-primary'%>
+
   </div>
 <% end %>
+</div>
