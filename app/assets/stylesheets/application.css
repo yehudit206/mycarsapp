@@ -16,3 +16,7 @@
  .masthead {
      margin:80px;
  }
+ body{
+    display: inline  !important;
+
+ }
